@@ -1,4 +1,4 @@
-package Tugas1;
+package Pert1;
 
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package Tugas2;
+package Pert2;
 
 import java.awt.event.*;
 import javax.swing.*;

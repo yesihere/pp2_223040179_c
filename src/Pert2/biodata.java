@@ -1,9 +1,9 @@
-package Tugas2;
+package Pert2;
 
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import javax.swing.*;
 
 public class biodata {
   public static void main(String[] args) {

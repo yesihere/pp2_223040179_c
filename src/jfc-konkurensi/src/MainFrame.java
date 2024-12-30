@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.List;
 import javax.swing.*;
 
 public class MainFrame {
@@ -26,41 +27,45 @@ public class MainFrame {
       frame.add(progressBar, BorderLayout.CENTER);
       frame.add(startButton, BorderLayout.SOUTH);
 
+      //Tombol aksi    
       startButton.addActionListener(e -> {
-    startButton.setEnabled(false); // Nonaktifkan tombol selama proses berlangsung
-    statusLabel.setText("Proses berjalan...");
+        startButton.setEnabled(false); //nonaktifkan tombol saat berjalan 
+        statusLabel.setText("Proses berjalan.... ");
 
-    SwingWorker<Void, Integer> worker = new SwingWorker<>() {
-        @Override
-        protected Void doInBackground() throws Exception {
-            for (int i = 1; i <= 60; i++) {
-                Thread.sleep(1000); // Simulasi pemrosesan data
-                publish(i); // Kirim progres ke proses
+         // Buat SwingWorker untuk menangani tugas berat
+         SwingWorker<Void, Integer> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                // Simulasi tugas berat
+                for (int i = 0; i <= 100; i++) {
+                    Thread.sleep(50); // Simulasi delay
+                    publish(i); // Perbarui progres
+                }
+                return null;
             }
-            return null;
-        }
 
-        @Override
-        protected void process(java.util.List<Integer> chunks) {
-            // Perbarui progress bar
-            int progress = chunks.get(chunks.size() - 1);
-            progressBar.setValue(progress);
-        }
+            @Override
+            protected void process(List<Integer> chunks) {
+                // Perbarui progress bar
+                int latestProgress = chunks.get(chunks.size() - 1);
+                progressBar.setValue(latestProgress);
+            }
 
-        @Override
-        protected void done() {
-            // Eksekusi setelah proses selesai
-            statusLabel.setText("Proses selesai!");
-            startButton.setEnabled(true); // Aktifkan kembali tombol
-        }
-    };
+            @Override
+            protected void done() {
+                // Aksi setelah tugas selesai
+                startButton.setEnabled(true);
+                statusLabel.setText("Proses selesai!");
+            }
+        };
 
-    worker.execute(); // Jalankan SwingWorker
-});
-
-      // Tampilkan frame
-      frame.setVisible(true);
+        // Jalankan SwingWorker
+        worker.execute();
     });
-  }
+
+    // Tampilkan frame
+    frame.setVisible(true);
+});
+}
 }
     
